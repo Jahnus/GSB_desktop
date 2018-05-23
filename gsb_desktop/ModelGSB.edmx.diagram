@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f92f699f5cad409f80f216a9e62587d9" Name="Diagram1">
+        <EntityTypeShape EntityType="gsb.laboratoire" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gsb.secteur" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gsb.travailler" Width="1.5" PointX="5.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="gsb.visiteur" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="gsb.FK_visiteur__id_laboratoire" ManuallyRouted="false" />
+        <AssociationConnector Association="gsb.FK_visiteur__id_secteur" ManuallyRouted="false" />
+        <AssociationConnector Association="gsb.FK_travailler__id_visiteur" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

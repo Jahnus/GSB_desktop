@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="gsb" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="laboratoire">
+    <Key>
+      <PropertyRef Name="id_laboratoire" />
+    </Key>
+    <Property Name="id_laboratoire" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nom_laboratoire" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="chef_vente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LesVisiteurs" Relationship="Self.FK_visiteur__id_laboratoire" FromRole="laboratoire" ToRole="visiteur" />
+  </EntityType>
+  <EntityType Name="secteur">
+    <Key>
+      <PropertyRef Name="id_secteur" />
+    </Key>
+    <Property Name="id_secteur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="lib_secteur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LesVisiteurs" Relationship="Self.FK_visiteur__id_secteur" FromRole="secteur" ToRole="visiteur" />
+  </EntityType>
+  <EntityType Name="travailler">
+    <Key>
+      <PropertyRef Name="id_visiteur" />
+      <PropertyRef Name="jjmmaa" />
+      <PropertyRef Name="id_region" />
+    </Key>
+    <Property Name="id_visiteur" Type="Int32" Nullable="false" />
+    <Property Name="jjmmaa" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="id_region" Type="Int32" Nullable="false" />
+    <Property Name="role_visiteur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LesVisiteurs" Relationship="Self.FK_travailler__id_visiteur" FromRole="travailler" ToRole="visiteur" />
+  </EntityType>
+  <EntityType Name="visiteur">
+    <Key>
+      <PropertyRef Name="id_visiteur" />
+    </Key>
+    <Property Name="id_visiteur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_laboratoire" Type="Int32" />
+    <Property Name="id_secteur" Type="Int32" />
+    <Property Name="nom_visiteur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="prenom_visiteur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="adresse_visiteur" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="cp_visiteur" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="ville_visiteur" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="date_embauche" Type="DateTime" Precision="0" />
+    <Property Name="login_visiteur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="pwd_visiteur" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="type_visiteur" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="LeLaboratoire" Relationship="Self.FK_visiteur__id_laboratoire" FromRole="visiteur" ToRole="laboratoire" />
+    <NavigationProperty Name="LeSecteur" Relationship="Self.FK_visiteur__id_secteur" FromRole="visiteur" ToRole="secteur" />
+    <NavigationProperty Name="travailler" Relationship="Self.FK_travailler__id_visiteur" FromRole="visiteur" ToRole="travailler" />
+  </EntityType>
+  <Association Name="FK_visiteur__id_laboratoire">
+    <End Role="laboratoire" Type="Self.laboratoire" Multiplicity="0..1" />
+    <End Role="visiteur" Type="Self.visiteur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="laboratoire">
+        <PropertyRef Name="id_laboratoire" />
+      </Principal>
+      <Dependent Role="visiteur">
+        <PropertyRef Name="id_laboratoire" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_visiteur__id_secteur">
+    <End Role="secteur" Type="Self.secteur" Multiplicity="0..1" />
+    <End Role="visiteur" Type="Self.visiteur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="secteur">
+        <PropertyRef Name="id_secteur" />
+      </Principal>
+      <Dependent Role="visiteur">
+        <PropertyRef Name="id_secteur" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_travailler__id_visiteur">
+    <End Role="visiteur" Type="Self.visiteur" Multiplicity="1" />
+    <End Role="travailler" Type="Self.travailler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="visiteur">
+        <PropertyRef Name="id_visiteur" />
+      </Principal>
+      <Dependent Role="travailler">
+        <PropertyRef Name="id_visiteur" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelGSB" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="laboratoire" EntityType="Self.laboratoire" />
+    <EntitySet Name="secteur" EntityType="Self.secteur" />
+    <EntitySet Name="travailler" EntityType="Self.travailler" />
+    <EntitySet Name="visiteur" EntityType="Self.visiteur" />
+    <AssociationSet Name="FK_visiteur__id_laboratoire" Association="Self.FK_visiteur__id_laboratoire">
+      <End Role="laboratoire" EntitySet="laboratoire" />
+      <End Role="visiteur" EntitySet="visiteur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_visiteur__id_secteur" Association="Self.FK_visiteur__id_secteur">
+      <End Role="secteur" EntitySet="secteur" />
+      <End Role="visiteur" EntitySet="visiteur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_travailler__id_visiteur" Association="Self.FK_travailler__id_visiteur">
+      <End Role="visiteur" EntitySet="visiteur" />
+      <End Role="travailler" EntitySet="travailler" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
